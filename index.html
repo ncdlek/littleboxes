@@ -50,8 +50,8 @@
         $bigbox.removeClass('pulse');
 
         // disable click counter
-        $(document).off('click touch', clickCounter);
-        $(document).one('click touch', moveBigBox);
+        $(document).off('click', clickCounter);
+        $(document).one('click', moveBigBox);
         $msgtext.html('CLICK TO START!')
     }
 
@@ -64,7 +64,7 @@
         $msgtext.html('CLICK!!!')
 
         // start click counter
-        $(document).on('click touch', clickCounter);
+        $(document).on('click', clickCounter);
 
         setTimeout(explodeBigBox, 3000);
     }
