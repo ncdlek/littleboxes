@@ -30,9 +30,6 @@
     
     $(document).ready(startGame());
     
-	// disable doubleclicks to prevent text highlights
-    $(document).mousedown(function(e){ e.preventDefault(); });
-    
     function clickCounter() {
         $boxCount++;
         $bigboxtext.html($boxCount);
