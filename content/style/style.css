@@ -24,10 +24,6 @@ body{
 }
 
 #container{
-    border: solid 1px black;
-    box-shadow: 3px 4px #918D80;
-    border-radius: 7px;
-
     height: 480px;
     width: 640px;
     margin: auto;
