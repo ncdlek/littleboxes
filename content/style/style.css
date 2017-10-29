@@ -1,0 +1,147 @@
+﻿*{
+    margin: 0;
+    padding: 0;
+}
+html {
+    height: 100%;
+  }
+body {
+    min-height: 100%;
+  }
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Press Start 2P', cursive;
+}
+
+@media screen and (min-width: 850px) {
+    #container{
+        height: 600px;
+        width: 800px;
+    }
+}
+
+#container{
+    border: solid 1px black;
+    box-shadow: 3px 4px #918D80;
+    border-radius: 7px;
+
+    height: 480px;
+    width: 640px;
+    margin: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: space-around;
+}
+#firegif{
+    height:8px;
+    width:8px;
+
+    align-self: center;
+    
+    position: absolute;
+    z-index: inherit;
+}
+#bigbox {
+    background-color: lightgreen;
+    box-shadow: 3px 4px #918D80;
+    border-radius: 7px;
+
+    height: 64px;
+    width: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    align-self: center;
+    position: absolute;
+    z-index: inherit;
+}
+#bigbox p {
+    font-size: 24px;
+}
+.littlebox{
+    box-shadow: 1px 1px #918D80;
+    border-radius: 3px;
+
+    height:32px;
+    width:32px;
+
+    align-self: center;
+    position: absolute;
+    z-index: inherit;
+}
+#msgtext{
+    text-shadow: 1px 1px #918D80;
+
+    margin-top: -150px;
+    position: absolute;
+    z-index: inherit;
+}
+
+/*!
+ * animate.css -http://daneden.me/animate
+ * Version - 3.5.2
+ * Licensed under the MIT license - http://opensource.org/licenses/MIT
+ *
+ * Copyright (c) 2017 Daniel Eden
+ */
+
+.animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+  }
+
+.animated.infinite {
+  animation-iteration-count: infinite;
+}
+
+@keyframes bounce {
+    from, 20%, 53%, 80%, to {
+      animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+      transform: translate3d(0,0,0);
+    }
+  
+    40%, 43% {
+      animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+      transform: translate3d(0, -30px, 0);
+    }
+  
+    70% {
+      animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+      transform: translate3d(0, -15px, 0);
+    }
+  
+    90% {
+      transform: translate3d(0,-4px,0);
+    }
+  }
+  
+  .bounce {
+    animation-name: bounce;
+    transform-origin: center bottom;
+  }
+
+  
+@keyframes pulse {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    transform: scale3d(1.05, 1.05, 1.05);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.pulse {
+  animation-name: pulse;
+}

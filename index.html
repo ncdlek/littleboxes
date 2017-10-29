@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<!--
+	2017.10.25
+	engin yazılan
+-->
+    <title>Little boxes!</title>
+	<meta charset="utf-8" />
+    <script src="Scripts/jquery-3.2.1.min.js"></script>
+    <link href="content/style/style.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+</head>
+<body>
+    <div id="container">
+        <p id="msgtext">CLICK TO START!</p>
+        <div id="bigbox" class="animated infinite bounce"><p>0</p></div>
+        <img id="firegif" src="content/img/fire.gif" />
+    </div>
+</body>
+</html>
+<script>
+    var $msgtext = $('#msgtext');
+    var $bigbox = $('#bigbox');
+    var $bigboxtext = $('#bigbox p');
+    var $firegif = $('#firegif');
+    var $container = $('#container');
+    var $boxCount = 0; // count of little boxes. change on restartGame function too.
+    
+    $(document).ready(startGame());
+    
+	// disable doubleclicks to prevent text highlights
+    $(document).mousedown(function(e){ e.preventDefault(); });
+    
+    function clickCounter() {
+        $boxCount++;
+        $bigboxtext.html($boxCount);
+    }
+
+    function startGame(){
+        $('.littlebox').remove(); // delete all little boxes
+        $boxCount = 0; // set counter to zero
+
+        $firegif.hide();
+
+        $container.append($bigbox); // show big box
+        $bigboxtext.html($boxCount);
+        $bigbox.addClass('bounce');
+        $bigbox.removeClass('pulse');
+
+        // disable click counter
+        $(document).off('click', clickCounter);
+        $(document).one('click', moveBigBox);
+        $msgtext.html('CLICK TO START!')
+    }
+
+    function moveBigBox(){
+        $boxCount++;
+
+        $bigbox.addClass('pulse');
+        $bigbox.removeClass('bounce');
+        $bigboxtext.html($boxCount);
+        $msgtext.html('CLICK!!!')
+
+        // start click counter
+        $(document).on('click', clickCounter);
+
+        setTimeout(explodeBigBox, 3000);
+    }
+
+    function explodeBigBox() { // to do's, after big box animation over
+
+        $firegif.show();
+        $firegif.css('height', $boxCount * 10 + 'px');
+        $firegif.css('width', $boxCount * 10 + 'px');
+
+        $bigbox.remove();
+
+        //create little boxes
+        createLittleBox();
+
+        setTimeout(startGame,3000);
+        $msgtext.html('SCORE: ' + $boxCount)
+    }
+
+    function createLittleBox(){
+        //create little boxes
+        for (var i = 0; i < $boxCount; i++) {
+            var $littleBox = $('<div id="' + i + '" class="littlebox"></div>');
+            $container.append($littleBox);
+        }
+
+        var x = $('body').width();
+
+        //randomly animate little boxes
+        $('#container > div.littlebox').each(function () {
+            var obj = {
+                height: '0px',
+                width: '0px',
+                top: Math.floor((Math.random() * 200) + 1) + 'px',
+                left: Math.floor((Math.random() * x)) + 'px',
+            };
+            
+            $(this).animate(obj, 2000);
+            $(this).css('background-color', '#' + Math.floor(Math.random() * 16777215).toString(16));
+
+        })
+    }
+</script>
