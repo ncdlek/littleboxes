@@ -20,7 +20,6 @@ body{
     #container{
         height: 600px;
         width: 800px;
-        cursor: pointer;
     }
 }
 
@@ -33,6 +32,8 @@ body{
     flex-direction: column;
     align-items:center;
     justify-content: space-around;
+
+    cursor: pointer;
 }
 #firegif{
     height:8px;
