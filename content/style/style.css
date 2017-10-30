@@ -1,7 +1,8 @@
 ﻿*{
     margin: 0;
     padding: 0;
-}
+} 
+
 html {
     height: 100%;
 }
@@ -25,14 +26,16 @@ body{
 }
 
 #container{
-    height: 480px;
-    width: 640px;
+    height: 100%;
+    width: 100%;
     margin: auto;
 
     display: flex;
     flex-direction: column;
     align-items:center;
     justify-content: space-around;
+
+    cursor: pointer;
 }
 #firegif{
     height:8px;
@@ -47,38 +50,36 @@ body{
     background-color: lightgreen;
     box-shadow: 3px 4px #918D80;
     border-radius: 7px;
-
     height: 64px;
     width: 64px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     align-self: center;
     position: absolute;
     z-index: inherit;
+    transition: all 300ms;
 }
 #bigbox p {
     font-size: 24px;
 }
-.littlebox{
+.littlebox {
     box-shadow: 1px 1px #918D80;
     border-radius: 3px;
-
-    height:32px;
-    width:32px;
-
+    height: 32px;
+    width: 32px;
     align-self: center;
     position: absolute;
     z-index: inherit;
 }
-#msgtext{
+#msgtext {
     text-shadow: 1px 1px #918D80;
-
     margin-top: -150px;
     position: absolute;
     z-index: inherit;
+}
+body:active #bigbox {
+    transform: scale(1.7);
 }
 
 /*!
@@ -123,22 +124,3 @@ body{
     animation-name: bounce;
     transform-origin: center bottom;
   }
-
-  
-@keyframes pulse {
-  from {
-    transform: scale3d(1, 1, 1);
-  }
-
-  50% {
-    transform: scale3d(1.05, 1.05, 1.05);
-  }
-
-  to {
-    transform: scale3d(1, 1, 1);
-  }
-}
-
-.pulse {
-  animation-name: pulse;
-}

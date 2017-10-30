@@ -7,89 +7,94 @@
 -->
     <title>Little boxes!</title>
 	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-    <script src="Scripts/jquery-3.2.1.min.js"></script>
-    <link href="content/style/style.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+    <script src="scripts/jquery-3.2.1.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link href="content/style/style.css" rel="stylesheet" />
 </head>
 <body>
-    <div id="container">
+    <div id="container" onclick="void(0)">
         <p id="msgtext">CLICK TO START!</p>
-        <div id="bigbox" class="animated infinite bounce"><p>0</p></div>
+        <div id="bigbox" class="animated infinite"><p id="bigboxtext">0</p></div>
         <img id="firegif" src="content/img/fire.gif" />
     </div>
 </body>
 </html>
 <script>
-    var $msgtext = $('#msgtext');
-    var $bigbox = $('#bigbox');
-    var $bigboxtext = $('#bigbox p');
-    var $firegif = $('#firegif');
-    var $container = $('#container');
+    var $msgtext = document.getElementById('msgtext');
+    var $bigbox = document.getElementById('bigbox');
+    var $bigboxtext = document.getElementById('bigboxtext');
+    var $firegif = document.getElementById('firegif');
+    var $container = document.getElementById('container');
     var $boxCount = 0; // count of little boxes. change on restartGame function too.
     
-    $(document).ready(startGame());
+    document.onload = startGame();
     
-    function clickCounter() {
-        $boxCount++;
-        $bigboxtext.html($boxCount);
-    }
-
     function startGame(){
-        $('.littlebox').remove(); // delete all little boxes
-        $boxCount = 0; // set counter to zero
+        // remove little boxes
+        var $elements = document.getElementsByClassName('littlebox');
+        while ($elements[0]) {
+            $elements[0]
+                .parentNode
+                .removeChild($elements[0]);
+        }
+        
+        $boxCount = -1; // set counter to zero
+        clickCounter();
 
-        $firegif.hide();
+        $firegif.style.display = 'none';
 
-        $container.append($bigbox); // show big box
-        $bigboxtext.html($boxCount);
-        $bigbox.addClass('bounce');
-        $bigbox.removeClass('pulse');
+        $bigbox.style.display = ''; // show big box
+        $bigbox.className += ' bounce';
 
         // disable click counter
-        $(document).off('click', clickCounter);
-        $(document).one('click', moveBigBox);
-        $msgtext.html('CLICK TO START!')
+        document.removeEventListener('click', clickCounter);
+        one(document, 'click', moveBigBox);
+        $msgtext.innerHTML = 'CLICK TO START!';
     }
 
     function moveBigBox(){
-        $boxCount++;
-
-        $bigbox.addClass('pulse');
-        $bigbox.removeClass('bounce');
-        $bigboxtext.html($boxCount);
-        $msgtext.html('CLICK!!!')
-
+        // count first click
+        clickCounter();
         // start click counter
-        $(document).on('click', clickCounter);
+        document.addEventListener('click', clickCounter);
+
+        $bigbox.className = $bigbox.className.replace( /(?:^|\s)bounce(?!\S)/g , '');
+        
+        $msgtext.innerHTML = 'CLICK!!!';
 
         setTimeout(explodeBigBox, 3000);
     }
 
+    function clickCounter() {
+        $boxCount++;
+        $bigboxtext.innerHTML = $boxCount;
+    }
+
     function explodeBigBox() { // to do's, after big box animation over
+        $firegif.style.display = '';
+        $firegif.style.height = $boxCount * 10 + 'px';
+        $firegif.style.width = $boxCount * 10 + 'px';
 
-        $firegif.show();
-        $firegif.css('height', $boxCount * 10 + 'px');
-        $firegif.css('width', $boxCount * 10 + 'px');
-
-        $bigbox.remove();
+        $bigbox.style.display = 'none';
 
         //create little boxes
         createLittleBox();
 
         setTimeout(startGame,3000);
-        $msgtext.html('SCORE: ' + $boxCount)
+        $msgtext.innerHTML = 'SCORE: ' + $boxCount;
     }
 
     function createLittleBox(){
         //create little boxes
         for (var i = 0; i < $boxCount; i++) {
-            var $littleBox = $('<div id="' + i + '" class="littlebox"></div>');
-            $container.append($littleBox);
+            var $littleBox = document.createElement('div');
+            $littleBox.id = i;
+            $littleBox.className = 'littlebox';
+            $container.appendChild($littleBox);
         }
 
-        var x = $('body').width();
-
+        var x = document.body.clientWidth;
         //randomly animate little boxes
         $('#container > div.littlebox').each(function () {
             var obj = {
@@ -98,10 +103,37 @@
                 top: Math.floor((Math.random() * 200) + 1) + 'px',
                 left: Math.floor((Math.random() * x)) + 'px',
             };
-            
+
             $(this).animate(obj, 2000);
             $(this).css('background-color', '#' + Math.floor(Math.random() * 16777215).toString(16));
 
         })
+
+        /* In pure JS i couldn't animate
+        var $elements = document.querySelectorAll('div.littlebox');
+        for (var i = 0; i < $elements.length; i++) {
+            var obj = {
+                height: '0px',
+                width: '0px',
+                top: Math.floor((Math.random() * 200) + 1),
+                left: Math.floor((Math.random() * x)),
+            };
+
+            $(this).animate(obj, 2000); // only line i used jQuery.
+
+            $elements[i].style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+        }
+        */
+    }
+
+    function one(element, eventType, callback, self) {
+        var one = function (event) {
+            try {
+                callback.call(self, event);
+            } finally {
+                element.removeEventListener(eventType, one);
+            }
+        }
+        element.addEventListener(eventType, one);
     }
 </script>
