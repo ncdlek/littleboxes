@@ -8,7 +8,6 @@
     <title>Little boxes!</title>
 	<meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no" />
-    <script src="Scripts/jquery-3.2.1.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
     <link href="content/style/style.css" rel="stylesheet" />
 </head>
@@ -95,35 +94,24 @@
         }
 
         var x = document.body.clientWidth;
-        //randomly animate little boxes
-        $('#container > div.littlebox').each(function () {
-            var obj = {
-                height: '0px',
-                width: '0px',
-                top: Math.floor((Math.random() * 200) + 1) + 'px',
-                left: Math.floor((Math.random() * x)) + 'px',
-            };
 
-            $(this).animate(obj, 2000);
-            $(this).css('background-color', '#' + Math.floor(Math.random() * 16777215).toString(16));
-
-        })
-
-        /* In pure JS i couldn't animate
+		//In pure JS i couldn't animate
         var $elements = document.querySelectorAll('div.littlebox');
         for (var i = 0; i < $elements.length; i++) {
-            var obj = {
-                height: '0px',
-                width: '0px',
-                top: Math.floor((Math.random() * 200) + 1),
-                left: Math.floor((Math.random() * x)),
-            };
-
-            $(this).animate(obj, 2000); // only line i used jQuery.
-
+            
+			var $tx = x / 2 - Math.floor((Math.random() * x));
+            var $ty = x / 2 - Math.floor((Math.random() * x));
+			
+			$elements[i].style.transform = 'translate('+ $tx +'px,'+ $ty +'px)';
+			$elements[i].style.transform = 'translate('+ $tx +'px,'+ $ty +'px)';
+			$elements[i].style.transform = 'translate('+ $tx +'px,'+ $ty +'px)';
+			$elements[i].style.transform = 'translate('+ $tx +'px,'+ $ty +'px)';
+			
+			$elements[i].style.transform += 'scale(0)';
+			
             $elements[i].style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
         }
-        */
+		
     }
 
     function one(element, eventType, callback, self) {

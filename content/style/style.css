@@ -75,6 +75,7 @@ body{
     align-self: center;
     position: absolute;
     z-index: inherit;
+	transition: transform 1s;  
 }
 #msgtext {
     text-shadow: 1px 1px #918D80;
